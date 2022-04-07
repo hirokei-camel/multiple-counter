@@ -40,3 +40,13 @@
   <button on:click={handleZero}>0</button>
   <button on:click={deleteCounter}>✖️</button>
 </div>
+
+<style>
+  button {
+    background-color: #9adcff;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+  }
+</style>

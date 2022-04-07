@@ -68,6 +68,14 @@
     margin: 0 auto;
   }
 
+  button {
+    background-color: #fff89a;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+  }
+
   h1 {
     font-size: 4em;
     font-weight: 100;
