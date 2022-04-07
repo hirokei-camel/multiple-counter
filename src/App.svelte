@@ -11,7 +11,7 @@
     },
   ];
 
-  // 子コンポーネントから渡された値を配列に反映させる処理群
+  // 子コンポーネントから渡された値を、配列に反映させる処理群。
   function addNewCounter() {
     index += 1;
     counters = [...counters, { index, count: 0, title: 'new' }];
@@ -33,7 +33,7 @@
     counters[event.detail.index].title = event.detail.title;
   }
 
-  // 値の更新がある都度に合計値とタイトルリストを更新
+  // 値の更新がある都度に、合計値とタイトル列挙を更新。
   $: total = counters.reduce((sum, item) => {
     return sum + item.count;
   }, 0);

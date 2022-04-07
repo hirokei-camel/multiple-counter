@@ -9,7 +9,7 @@
   let count = 0;
   let title = 'new';
 
-  // ボタンが押されたとき、値の更新と親コンポーネントへの値渡しをする処理群
+  // ボタンが押されたとき、値の更新と親コンポーネントへの値渡しをする処理群。
   function handleTitle() {
     dispatch('title', { index, title });
   }
