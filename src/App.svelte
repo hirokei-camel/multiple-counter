@@ -1,6 +1,8 @@
 <script lang="ts">
   import Counter from './Counter.svelte';
   let index = 0;
+
+  // カウンターの状態が格納される配列
   let counters = [
     {
       index: 0,
@@ -9,32 +11,29 @@
     },
   ];
 
+  // 子コンポーネントから渡された値を配列に反映させる処理群
   function addNewCounter() {
     index += 1;
     counters = [...counters, { index, count: 0, title: 'new' }];
   }
-
   function deleteCounter(event) {
     counters.splice(event.detail.index, 1);
     counters = counters;
   }
-
   function plus(event) {
     counters[event.detail.index].count = event.detail.count;
   }
-
   function minus(event) {
     counters[event.detail.index].count = event.detail.count;
   }
-
   function zero(event) {
     counters[event.detail.index].count = event.detail.count;
   }
-
   function updateTitle(event) {
     counters[event.detail.index].title = event.detail.title;
   }
 
+  // 値の更新がある都度に合計値とタイトルリストを更新
   $: total = counters.reduce((sum, item) => {
     return sum + item.count;
   }, 0);
@@ -49,7 +48,6 @@
   {#each counters as counter, index (counter.index)}
     <Counter
       {index}
-      title={counter.title}
       on:plus={plus}
       on:minus={minus}
       on:zero={zero}

@@ -3,15 +3,16 @@
 
   const dispatch = createEventDispatcher();
 
+  // 新しくカウンターが生成されたときにインデックス番号を付与しておくため。
   export let index: Number;
-  export let title: string;
 
   let count = 0;
+  let title = 'new';
 
+  // ボタンが押されたとき、値の更新と親コンポーネントへの値渡しをする処理群
   function handleTitle() {
     dispatch('title', { index, title });
   }
-
   function handlePlus() {
     count += 1;
     dispatch('plus', { index, count });
@@ -26,7 +27,6 @@
     count = 0;
     dispatch('zero', { index, count });
   }
-
   function deleteCounter() {
     dispatch('delete', { index });
   }
