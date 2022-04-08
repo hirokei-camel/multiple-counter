@@ -4,7 +4,7 @@
   const dispatch = createEventDispatcher();
 
   // 新しくカウンターが生成されたときにインデックス番号を付与しておくため。
-  export let index: Number;
+  export let index: number;
 
   let count = 0;
   let title = 'new';
