@@ -3,41 +3,41 @@
 
   const dispatch = createEventDispatcher();
 
-  // 新しくカウンターが生成されたときにインデックス番号を付与しておくため。
+  // 削除ボタンが押された際に配列の場所を特定するための変数
   export let index: number;
 
-  let count = 0;
-  let title = 'new';
+  export let count: number;
+  export let title: string;
 
-  // ボタンが押されたとき、値の更新と親コンポーネントへの値渡しをする処理群。
-  function handleTitle() {
-    dispatch('title', { index, title });
-  }
-  function handlePlus() {
-    count += 1;
-    dispatch('plus', { index, count });
-  }
-  function handleMinus() {
-    if (count >= 1) {
-      count -= 1;
-      dispatch('minus', { index, count });
+  // 数値が更新された際の処理。
+  const calc = (operator: string) => {
+    switch (operator) {
+      case 'plus':
+        count += 1;
+        break;
+      case 'minus':
+        if (count >= 1) {
+          count -= 1;
+        }
+        break;
+      case 'zero':
+        count = 0;
+        break;
     }
-  }
-  function handleZero() {
-    count = 0;
-    dispatch('zero', { index, count });
-  }
-  function deleteCounter() {
+  };
+
+  const deleteCounter = () => {
     dispatch('delete', { index });
-  }
+  };
 </script>
 
 <div>
-  <input type="text" bind:value={title} on:input={handleTitle} />
+  <input type="text" bind:value={title} />
+
   <span>{count}</span>
-  <button on:click={handlePlus}>+</button>
-  <button on:click={handleMinus}>-</button>
-  <button on:click={handleZero}>0</button>
+  <button on:click={() => calc('plus')}>+</button>
+  <button on:click={() => calc('minus')}>-</button>
+  <button on:click={() => calc('zero')}>0</button>
   <button on:click={deleteCounter}>✖️</button>
 </div>
 
