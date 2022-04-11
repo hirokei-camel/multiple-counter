@@ -1,15 +1,17 @@
 <script lang="ts">
-  import Counter from './Counter.svelte';
+  import { onDestroy } from 'svelte';
+  import Counter from './components/Counter.svelte';
+  import { countersData } from './countersData';
 
-  // カウンターの状態が格納される配列
-  let counters = [
-    {
-      index: 0,
-      count: 0,
-      title: 'new',
-    },
-  ];
-  counters[counters.length - 1].index;
+  // カウンターの状態が格納される配列(store)
+  let counters;
+
+  const unsubscribe = countersData.subscribe((value) => {
+    counters = value;
+  });
+
+  onDestroy(unsubscribe);
+  // counters[counters.length - 1].index;
   // カウンターコンポーネントを作成、削除するための処理群。
   function addNewCounter() {
     let lastIndex =
