@@ -1,23 +1,15 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte';
   import Counter from './components/Counter.svelte';
   import { countersData } from './countersData';
 
-  // カウンターの状態が格納される配列(store)
-  let counters;
-
-  const unsubscribe = countersData.subscribe((value) => {
-    counters = value;
-  });
-
-  onDestroy(unsubscribe);
-  // counters[counters.length - 1].index;
-  // カウンターコンポーネントを作成、削除するための処理群。
+  // カウンターコンポーネントを作成するための処理(処理が長いため、関数を定義しました)
   function addNewCounter() {
     let lastIndex =
-      counters.length == 0 ? 0 : counters[counters.length - 1].index + 1;
-    counters = [
-      ...counters,
+      $countersData.length == 0
+        ? 0
+        : $countersData[$countersData.length - 1].index + 1;
+    $countersData = [
+      ...$countersData,
       {
         index: lastIndex,
         count: 0,
@@ -25,30 +17,21 @@
       },
     ];
   }
-  function deleteCounter(event) {
-    counters.splice(event.detail.index, 1);
-    counters = counters;
-  }
 
   // 値の更新がある都度に、合計値とタイトル列挙を更新。
-  $: total = counters.reduce((sum, item) => {
+  $: total = $countersData.reduce((sum, item) => {
     return sum + item.count;
   }, 0);
 
-  $: titleList = counters.map((x) => {
+  $: titleList = $countersData.map((x) => {
     return x.title;
   });
 </script>
 
 <main>
   <h1>Multiple Counter</h1>
-  {#each counters as counter, index (counter.index)}
-    <Counter
-      {index}
-      bind:count={counters[index].count}
-      bind:title={counters[index].title}
-      on:delete={deleteCounter}
-    />
+  {#each $countersData as counter, index (counter.index)}
+    <Counter {index} />
   {/each}
   <button on:click={addNewCounter}>New Counter</button>
   <p>title list: {titleList}</p>

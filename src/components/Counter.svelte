@@ -1,44 +1,23 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
-  const dispatch = createEventDispatcher();
+  import { countersData } from '../countersData';
 
   // 削除ボタンが押された際に配列の場所を特定するための変数
   export let index: number;
-
-  export let count: number;
-  export let title: string;
-
-  // 数値が更新された際の処理。
-  const calc = (operator: string) => {
-    switch (operator) {
-      case 'plus':
-        count += 1;
-        break;
-      case 'minus':
-        if (count >= 1) {
-          count -= 1;
-        }
-        break;
-      case 'zero':
-        count = 0;
-        break;
-    }
-  };
-
-  const deleteCounter = () => {
-    dispatch('delete', { index });
-  };
 </script>
 
 <div>
-  <input type="text" bind:value={title} />
+  <input type="text" bind:value={$countersData[index].title} />
 
-  <span>{count}</span>
-  <button on:click={() => calc('plus')}>+</button>
-  <button on:click={() => calc('minus')}>-</button>
-  <button on:click={() => calc('zero')}>0</button>
-  <button on:click={deleteCounter}>✖️</button>
+  <span>{$countersData[index].count}</span>
+  <button on:click={() => ($countersData[index].count += 1)}>+</button>
+  <button on:click={() => ($countersData[index].count -= 1)}>-</button>
+  <button on:click={() => ($countersData[index].count = 0)}>0</button>
+  <button
+    on:click={() => {
+      $countersData.splice(index, 1);
+      $countersData = $countersData;
+    }}>✖️</button
+  >
 </div>
 
 <style>
