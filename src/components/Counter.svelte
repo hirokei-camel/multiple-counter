@@ -1,6 +1,5 @@
 <script lang="ts">
   import { countersData } from '../countersData';
-
   // 削除ボタンが押された際に配列の場所を特定するための変数
   export let index: number;
 </script>

@@ -1,10 +1,11 @@
 <script lang="ts">
   import Counter from './components/Counter.svelte';
   import { countersData } from './countersData';
+  import type { counter } from './types';
 
   // カウンターコンポーネントを作成するための処理(処理が長いため、関数を定義しました)
-  function addNewCounter() {
-    let lastIndex =
+  function addNewCounter(): void {
+    let lastIndex: number =
       $countersData.length == 0
         ? 0
         : $countersData[$countersData.length - 1].index + 1;
@@ -19,11 +20,11 @@
   }
 
   // 値の更新がある都度に、合計値とタイトル列挙を更新。
-  $: total = $countersData.reduce((sum, item) => {
+  $: total = $countersData.reduce((sum: number, item: counter): number => {
     return sum + item.count;
   }, 0);
 
-  $: titleList = $countersData.map((x) => {
+  $: titleList = $countersData.map((x: counter): string => {
     return x.title;
   });
 </script>
