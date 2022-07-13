@@ -1,59 +1,36 @@
 <script lang="ts">
-  import Counter from './Counter.svelte';
-  let index = 0;
+  import Counter from './components/Counter.svelte';
+  import { countersData } from './countersData';
+  import type { counter } from './types';
 
-  // カウンターの状態が格納される配列
-  let counters = [
-    {
-      index: 0,
-      count: 0,
-      title: 'new',
-    },
-  ];
-
-  // 子コンポーネントから渡された値を、配列に反映させる処理群。
-  function addNewCounter() {
-    index += 1;
-    counters = [...counters, { index, count: 0, title: 'new' }];
-  }
-  function deleteCounter(event) {
-    counters.splice(event.detail.index, 1);
-    counters = counters;
-  }
-  function plus(event) {
-    counters[event.detail.index].count = event.detail.count;
-  }
-  function minus(event) {
-    counters[event.detail.index].count = event.detail.count;
-  }
-  function zero(event) {
-    counters[event.detail.index].count = event.detail.count;
-  }
-  function updateTitle(event) {
-    counters[event.detail.index].title = event.detail.title;
+  function addNewCounter(): void {
+    let lastIndex: number =
+      $countersData.length == 0
+        ? 0
+        : $countersData[$countersData.length - 1].index + 1;
+    $countersData = [
+      ...$countersData,
+      {
+        index: lastIndex,
+        count: 0,
+        title: 'new',
+      },
+    ];
   }
 
-  // 値の更新がある都度に、合計値とタイトル列挙を更新。
-  $: total = counters.reduce((sum, item) => {
+  $: total = $countersData.reduce((sum: number, item: counter): number => {
     return sum + item.count;
   }, 0);
 
-  $: titleList = counters.map((x) => {
+  $: titleList = $countersData.map((x: counter): string => {
     return x.title;
   });
 </script>
 
 <main>
   <h1>Multiple Counter</h1>
-  {#each counters as counter, index (counter.index)}
-    <Counter
-      {index}
-      on:plus={plus}
-      on:minus={minus}
-      on:zero={zero}
-      on:delete={deleteCounter}
-      on:title={updateTitle}
-    />
+  {#each $countersData as counter, index (counter.index)}
+    <Counter {index} />
   {/each}
   <button on:click={addNewCounter}>New Counter</button>
   <p>title list: {titleList}</p>
