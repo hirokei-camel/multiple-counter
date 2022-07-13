@@ -3,3 +3,5 @@ export type counter = {
   count: number;
   title: string;
 };
+
+export type operationInfo = 'plus' | 'minus' | 'reset';
