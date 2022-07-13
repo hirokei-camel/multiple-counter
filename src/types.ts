@@ -4,4 +4,8 @@ export type counter = {
   title: string;
 };
 
-export type operationInfo = 'plus' | 'minus' | 'reset';
+export enum operationType {
+  Plus,
+  Minus,
+  Reset,
+}
